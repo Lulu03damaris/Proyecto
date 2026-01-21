@@ -1,3 +1,5 @@
+import os
+
 class Island:
     def __init__(self, map_file):
         self.map = []
@@ -8,7 +10,10 @@ class Island:
             "RIGHT": (0, 1)
         }
 
-        with open(map_file) as f:
+        base_path = os.path.dirname(__file__)
+        map_path = os.path.join(base_path, map_file)
+
+        with open(map_path) as f:
             for i, line in enumerate(f):
                 row = line.strip().split()
                 for j, cell in enumerate(row):
@@ -18,6 +23,7 @@ class Island:
                         self.goal = (i, j)
                 self.map.append(row)
 
+    # ✅ ESTE MÉTODO ES OBLIGATORIO
     def is_valid(self, state):
         x, y = state
         if x < 0 or y < 0:
@@ -26,6 +32,7 @@ class Island:
             return False
         return self.map[x][y] != "#"
 
+    # ✅ ESTE MÉTODO TAMBIÉN ES OBLIGATORIO
     def get_cost(self, state):
         x, y = state
         if self.map[x][y] == "~":
