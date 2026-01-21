@@ -2,17 +2,21 @@ from island import Island
 from searchAgents import *
 from search import *
 from graphics import Graphics
-import time
 
 def manhattan(state, problem):
     gx, gy = problem.island.goal
     x, y = state
     return abs(x - gx) + abs(y - gy)
 
+# Cargar isla
 island = Island("island_map.txt")
 problem = IslandSearchProblem(island)
 
+# Elegir algoritmo
 agent = SearchAgent(aStarSearch, heuristic=manhattan)
+# agent = SearchAgent(breadthFirstSearch)
+# agent = SearchAgent(uniformCostSearch)
+
 actions = agent.plan(problem)
 
 # Convertir acciones en posiciones
@@ -26,8 +30,6 @@ for action in actions:
     y += dy
     positions.append((x, y))
 
+# Animación
 graphics = Graphics(island)
-graphics.draw(positions)
-
-
-time.sleep(60)
+graphics.animate(positions, delay=0.6)
